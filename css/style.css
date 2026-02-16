@@ -259,6 +259,195 @@ footer {
     font-size: 0.9em;
 }
 
+/* Страница SOC калькулятора */
+.method-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.radio-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.radio-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.radio-content {
+    background: #f8f9fa;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.radio-card input[type="radio"]:checked + .radio-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.radio-icon {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.radio-title {
+    font-weight: 600;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.radio-desc {
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+.input-section {
+    margin-bottom: 20px;
+}
+
+.input-hint {
+    display: block;
+    margin-top: 5px;
+    color: #666;
+    font-style: italic;
+}
+
+.soc-result-header {
+    margin-bottom: 20px;
+}
+
+.soc-gauge {
+    position: relative;
+    height: 50px;
+    background: #f0f0f0;
+    border-radius: 25px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.soc-gauge-fill {
+    height: 100%;
+    transition: width 0.6s ease;
+    border-radius: 25px;
+}
+
+.soc-gauge-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #333;
+    text-shadow: 0 0 3px white, 0 0 3px white;
+}
+
+.soc-status {
+    text-align: center;
+    font-size: 1.4em;
+    font-weight: 700;
+}
+
+.result-details {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #e0e0e0;
+}
+
+.result-detail {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.result-detail:last-child {
+    border-bottom: none;
+}
+
+.result-detail.correction {
+    background: #fff3cd;
+    padding: 8px 10px;
+    margin: 5px -10px;
+    border-radius: 4px;
+    border: none;
+}
+
+.result-detail.highlight {
+    background: #f8f9fa;
+    padding: 8px 10px;
+    margin: 10px -10px 0;
+    border-radius: 4px;
+    font-weight: 600;
+    border: none;
+}
+
+.detail-label {
+    color: #666;
+}
+
+.detail-value {
+    font-weight: 600;
+    color: #333;
+}
+
+.soc-info {
+    margin: 30px 0;
+}
+
+.soc-info h3 {
+    color: #667eea;
+    margin-bottom: 20px;
+}
+
+.soc-levels {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.soc-level {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 4px solid;
+}
+
+.level-100 { border-left-color: #4CAF50; }
+.level-75 { border-left-color: #8BC34A; }
+.level-50 { border-left-color: #FFC107; }
+.level-25 { border-left-color: #FF9800; }
+.level-0 { border-left-color: #F44336; }
+
+.level-indicator {
+    min-width: 60px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2em;
+    color: #667eea;
+}
+
+.level-desc {
+    flex: 1;
+}
+
+.level-desc strong {
+    display: block;
+    margin-bottom: 3px;
+}
+
 /* Страница Кулон-820 */
 .results-container {
     display: none;
