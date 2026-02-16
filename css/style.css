@@ -1,0 +1,295 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+}
+
+header h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+.back-link {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.3s;
+}
+
+.back-link:hover {
+    opacity: 0.8;
+}
+
+main {
+    padding: 40px 30px;
+}
+
+/* Главная страница */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.card-icon {
+    font-size: 3em;
+    margin-bottom: 15px;
+}
+
+.card h2 {
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    color: #667eea;
+}
+
+.card p {
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Страницы с калькуляторами */
+.info-block {
+    background: #e8f4f8;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    border-left: 4px solid #667eea;
+}
+
+.requirements, .principle, .steps, .warnings {
+    margin-bottom: 30px;
+}
+
+.requirements h3, .principle h3, .steps h3, .warnings h3, .formula-block h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.requirements ul, .steps ol {
+    margin-left: 25px;
+}
+
+.requirements li, .steps li {
+    margin-bottom: 10px;
+}
+
+.formula {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 15px 0;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+.calculator {
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 8px;
+    margin: 30px 0;
+}
+
+.calculator h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 6px;
+    font-size: 1.1em;
+    font-weight: 600;
+    display: none;
+}
+
+.result.show {
+    display: block;
+}
+
+.result.success {
+    background: #d4edda;
+    color: #155724;
+    border: 2px solid #c3e6cb;
+}
+
+.result.info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 2px solid #bee5eb;
+}
+
+.formula-block {
+    margin: 30px 0;
+}
+
+.note {
+    background: #fff3cd;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 30px;
+    border-left: 4px solid #ffc107;
+}
+
+/* Таблица */
+.table-container {
+    margin: 30px 0;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table thead {
+    background: #667eea;
+    color: white;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+footer {
+    background: #f8f9fa;
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    header {
+        padding: 30px 20px;
+    }
+    
+    header h1 {
+        font-size: 1.5em;
+    }
+    
+    main {
+        padding: 30px 20px;
+    }
+    
+    .cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .calculator {
+        padding: 20px;
+    }
+    
+    table {
+        font-size: 0.9em;
+    }
+    
+    table th, table td {
+        padding: 8px;
+    }
+}
