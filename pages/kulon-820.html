@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройка Кулон-820</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="../index.html" class="back-link">← Назад на главную</a>
+            <h1>Настройка зарядного устройства Кулон-820</h1>
+        </header>
+
+        <main>
+            <div class="info-block">
+                <p>Автоматический расчёт всех параметров для зарядки аккумулятора. Введите только напряжение и ёмкость АКБ — остальные настройки будут рассчитаны по оптимальным соотношениям для Ca/Ca батарей.</p>
+            </div>
+
+            <div class="calculator">
+                <h2>Параметры АКБ</h2>
+                <div class="input-group">
+                    <label for="voltage">Номинальное напряжение АКБ (В):</label>
+                    <input type="number" id="voltage" placeholder="Например: 12" min="6" max="24" step="1" value="12">
+                </div>
+                <div class="input-group">
+                    <label for="capacity">Ёмкость АКБ (Ач):</label>
+                    <input type="number" id="capacity" placeholder="Например: 60" min="1" step="1" value="60">
+                </div>
+                <button onclick="calculateSettings()" class="btn">Рассчитать настройки</button>
+            </div>
+
+            <div id="results" class="results-container"></div>
+        </main>
+
+        <footer>
+            <p>Калькуляторы для автомобильных аккумуляторов</p>
+        </footer>
+    </div>
+
+    <script src="../js/kulon-820.js"></script>
+</body>
+</html>
