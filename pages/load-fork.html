@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проверка АКБ нагрузочной вилкой</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="../index.html" class="back-link">← Назад на главную</a>
+            <h1>Проверка аккумулятора нагрузочной вилкой</h1>
+            <p class="subtitle">Какой ток ставить, до скольки допустима просадка и как должно идти восстановление</p>
+        </header>
+
+        <main>
+            <div class="info-block">
+                <p>Нагрузочная вилка имитирует пуск двигателя: на несколько секунд к АКБ подключается мощный резистор, а вольтметр показывает, насколько «просело» напряжение. Вольтметр без нагрузки показывает только заряд, а вилка — <strong>способность отдать большой ток</strong>, то есть состояние пластин и внутреннее сопротивление.</p>
+            </div>
+
+            <div class="calculator">
+                <div class="method-selector">
+                    <label class="radio-card">
+                        <input type="radio" name="mode" value="select" checked>
+                        <div class="radio-content">
+                            <div class="radio-icon">🎯</div>
+                            <div class="radio-title">Подбор тока</div>
+                            <div class="radio-desc">Сколько ампер, сколько секунд, какая просадка норма</div>
+                        </div>
+                    </label>
+                    <label class="radio-card">
+                        <input type="radio" name="mode" value="check">
+                        <div class="radio-content">
+                            <div class="radio-icon">🔍</div>
+                            <div class="radio-title">Оценка результата</div>
+                            <div class="radio-desc">Ввести показания вилки и получить вывод</div>
+                        </div>
+                    </label>
+                </div>
+
+                <h2>Параметры аккумулятора</h2>
+                <div class="input-group">
+                    <label for="batteryType">Тип аккумулятора:</label>
+                    <select id="batteryType">
+                        <option value="starter">Стартерный жидкостный (Sb/Ca, Ca/Ca, EFB)</option>
+                        <option value="agm">Стартерный AGM</option>
+                        <option value="moto">Мото / малой ёмкости (до 30 Ач)</option>
+                        <option value="deep">Гелевый (GEL), тяговый, ИБП, глубокого разряда</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="ocv">Начальный заряд — напряжение без нагрузки (В):</label>
+                    <input type="number" id="ocv" value="12.65" placeholder="Например: 12.65" min="10" max="14" step="0.01">
+                    <small class="input-hint">Замер на отстоявшемся АКБ. 12,6 В и выше — 100 %</small>
+                </div>
+                <div class="input-group">
+                    <label for="capacity">Ёмкость C20 (Ач):</label>
+                    <input type="number" id="capacity" value="60" placeholder="Например: 60" min="1" step="1">
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="cca">Ток холодной прокрутки (А), если известен:</label>
+                        <input type="number" id="cca" value="540" placeholder="Например: 540" min="1" step="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="ccaStandard">Стандарт:</label>
+                        <select id="ccaStandard">
+                            <option value="1">EN (EN 50342) — европейский</option>
+                            <option value="1">SAE / CCA — американский, азиатские АКБ</option>
+                            <option value="1">ГОСТ Р 53165 / МЭК 60095-1 — российский</option>
+                            <option value="1.7">DIN — старый немецкий</option>
+                            <option value="1.7">ГОСТ 959-91 — старый советский</option>
+                        </select>
+                    </div>
+                </div>
+                <small class="input-hint input-row-hint">Указан на этикетке, например «540A (EN)» или «CCA 540». EN, SAE и ГОСТ Р близки (±10 %); DIN и ГОСТ 959-91 ≈ EN / 1,7 — калькулятор пересчитает сам</small>
+                <div class="input-group">
+                    <label for="temperature">Температура АКБ (°C):</label>
+                    <input type="number" id="temperature" value="21" min="-30" max="50" step="1">
+                </div>
+                <div class="input-group">
+                    <label for="forkCurrent">Ток вашей вилки (А), если он фиксированный:</label>
+                    <input type="number" id="forkCurrent" value="100" placeholder="Например: 100" min="1" step="1">
+                    <small class="input-hint">Часто 100 или 200 А — написано на корпусе или в паспорте</small>
+                </div>
+
+                <div id="check-input" class="input-section" style="display: none;">
+                    <h2>Показания вилки</h2>
+                    <div class="input-group">
+                        <label for="loadV">Напряжение под нагрузкой, в конце теста (В):</label>
+                        <input type="number" id="loadV" placeholder="Например: 10.1" min="0" max="14" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label for="recoveryV">Напряжение через ~5 с после снятия нагрузки (В):</label>
+                        <input type="number" id="recoveryV" placeholder="Например: 12.45" min="0" max="14" step="0.01">
+                    </div>
+                    <div class="input-group">
+                        <label for="behavior">Как вело себя напряжение под нагрузкой:</label>
+                        <select id="behavior">
+                            <option value="stable">Стояло ровно</option>
+                            <option value="falling">Постоянно сползало вниз</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="calculateLoadTest()" class="btn">Рассчитать</button>
+                <div id="result" class="result"></div>
+            </div>
+
+            <div class="principle">
+                <h3>Какой ток нагрузки ставить и почему</h3>
+                <p>Общепринятая методика (BCI, Battery Council International) — нагрузка током, равным <strong>половине тока холодной прокрутки (½ CCA)</strong>, в течение <strong>15 секунд</strong>. Половина CCA — это примерно тот ток, который берёт стартер исправного двигателя. Сам ток CCA определяется стандартами (SAE J537, EN 50342-1, ГОСТ Р 53165) при −18 °C, а тест при плюсовой температуре половинным током даёт сопоставимую нагрузку без перегрева.</p>
+                <p>Если CCA неизвестен, нагружают током <strong>3–3,5 × C20</strong> (для 60 Ач — 180–210 А), время <strong>5–15 секунд</strong>. Критерий тот же — не ниже 9,6 В.</p>
+                <div class="formula">
+                    <strong>I = 0,5 × CCA(EN)</strong>, а если CCA неизвестен — <strong>I = 3 × C20</strong>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <h3>Рекомендуемый ток по типу АКБ</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Тип АКБ</th>
+                            <th>Ток нагрузки</th>
+                            <th>Время</th>
+                            <th>Комментарий</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Стартерный 45–75 Ач</td>
+                            <td>½ CCA (≈ 200–350 А) или 3 × C20</td>
+                            <td>5–15 с</td>
+                            <td>Вилка 200 А — оптимальна</td>
+                        </tr>
+                        <tr>
+                            <td>Стартерный 90–225 Ач (грузовой)</td>
+                            <td>½ CCA (≈ 350–600 А)</td>
+                            <td>5–15 с</td>
+                            <td>Вилка 100–200 А даёт недогруз — порог выше (см. калькулятор)</td>
+                        </tr>
+                        <tr>
+                            <td>AGM, EFB</td>
+                            <td>½ CCA</td>
+                            <td>5–15 с</td>
+                            <td>Сопротивление ниже — просадка меньше, чем у обычных</td>
+                        </tr>
+                        <tr>
+                            <td>Мото, до 30 Ач</td>
+                            <td>3 × C20 (≈ 20–90 А)</td>
+                            <td>5 с</td>
+                            <td>Вилкой на 100–200 А не проверять — перегруз</td>
+                        </tr>
+                        <tr>
+                            <td>GEL, тяговые, ИБП</td>
+                            <td>—</td>
+                            <td>—</td>
+                            <td>Не рассчитаны на стартерный ток. Проверка — контрольным разрядом</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="table-container">
+                <h3>Минимальное напряжение под нагрузкой ½ CCA в зависимости от температуры</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Температура АКБ, °C</th>
+                            <th>Не ниже, В</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>+21 и выше</td><td>9,6</td></tr>
+                        <tr><td>+16</td><td>9,5</td></tr>
+                        <tr><td>+10</td><td>9,4</td></tr>
+                        <tr><td>+4</td><td>9,3</td></tr>
+                        <tr><td>−1</td><td>9,1</td></tr>
+                        <tr><td>−7</td><td>8,9</td></tr>
+                        <tr><td>−12</td><td>8,7</td></tr>
+                        <tr><td>−18</td><td>8,5</td></tr>
+                    </tbody>
+                </table>
+                <p>Холодный электролит хуже проводит ток, поэтому в мороз допустимая просадка больше. Температура — самой батареи, а не воздуха на улице.</p>
+            </div>
+
+            <div class="table-container">
+                <h3>Как читать результат</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Что видно на вольтметре</th>
+                            <th>Вывод</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Под нагрузкой ≥ 10,2 В, стоит ровно; после снятия за ~5 с поднимается до 12,4 В и выше</td>
+                            <td>АКБ в отличном состоянии</td>
+                        </tr>
+                        <tr>
+                            <td>Под нагрузкой между порогом (9,6 В при +21 °C) и 10,2 В, стоит ровно</td>
+                            <td>Исправна, но износ заметен</td>
+                        </tr>
+                        <tr>
+                            <td>Ниже порога</td>
+                            <td>Сначала полностью зарядить и повторить. Если снова ниже — АКБ изношена</td>
+                        </tr>
+                        <tr>
+                            <td>Напряжение всё время ползёт вниз за время теста</td>
+                            <td>Сульфатация или осыпание пластин, ёмкость потеряна</td>
+                        </tr>
+                        <tr>
+                            <td>Резко падает до 6–8 В или ниже, одна банка «кипит»</td>
+                            <td>Замыкание или обрыв в банке — замена</td>
+                        </tr>
+                        <tr>
+                            <td>После снятия нагрузки остаётся ниже 12,4 В и медленно ползёт вверх минутами</td>
+                            <td>Недозаряд или сульфатация</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="requirements">
+                <h3>Условия, без которых тест бессмыслен</h3>
+                <ul>
+                    <li><strong>АКБ заряжена минимум на 75 %</strong> (напряжение покоя ≥ 12,4 В, лучше ≥ 12,6 В). Разряженная батарея провалит тест, даже если она новая.</li>
+                    <li><strong>Нет поверхностного заряда.</strong> После зарядки или поездки — отстой 6–12 часов, либо нагрузить вилкой на 10–15 с, подождать 1–2 минуты и только потом проводить замер.</li>
+                    <li><strong>Чистые клеммы и плотный контакт</strong> щупов. Плохой контакт искрит и занижает показания.</li>
+                    <li><strong>Вилка исправна:</strong> спираль не прогоревшая, показания встроенного вольтметра сверены с мультиметром.</li>
+                </ul>
+            </div>
+
+            <div class="steps">
+                <h3>Порядок проверки</h3>
+                <ol>
+                    <li>Измерить напряжение без нагрузки. Если ниже 12,4 В — сначала зарядить.</li>
+                    <li>Подключить «+» вилки к плюсовой клемме, затем прижать щуп «−» к минусовой.</li>
+                    <li>Включить нагрузку и держать <strong>5–10 с</strong> (не дольше 15 с). Следить, чтобы напряжение стояло ровно, а не сползало.</li>
+                    <li>Зафиксировать минимальное напряжение в конце нагрузки.</li>
+                    <li>Снять нагрузку и смотреть восстановление в течение 5–10 с.</li>
+                    <li>Повторять не раньше чем через 1–2 минуты — и батарее, и спирали вилки нужно остыть.</li>
+                </ol>
+            </div>
+
+            <div class="warnings">
+                <h3>Безопасность</h3>
+                <p>При нагрузке АКБ выделяет водород. Не проверяйте батарею с открытыми пробками, сразу после зарядки (когда она «кипела») и рядом с открытым огнём. Сначала прижимайте щупы, потом включайте нагрузку — не наоборот, чтобы искра не возникла у самой батареи.</p>
+                <p>Спираль вилки разогревается докрасна — не кладите её на провода, пластик и не трогайте сразу после теста.</p>
+            </div>
+
+            <div class="note">
+                <h4>Примечания</h4>
+                <ul>
+                    <li><strong>Недогруз вилкой.</strong> Если ток вилки меньше рекомендуемого (например, 100 А на 190 Ач), порог 9,6 В слишком мягкий. Калькулятор пересчитывает его пропорционально току — это оценка по линейной модели внутреннего сопротивления, а не стандарт.</li>
+                    <li><strong>CCA по разным стандартам:</strong> EN ≈ SAE ≈ ГОСТ Р 53165 (расхождение до 10 %); DIN ≈ ГОСТ 959-91 ≈ EN / 1,7 — это приближение, точного пересчёта нет, стандарты меряют при разных времени и конечном напряжении. Методика ½ CCA рассчитана на значение по EN/SAE — калькулятор приводит DIN к EN сам.</li>
+                    <li><strong>Литиевые стартерные АКБ</strong> вилкой не проверяют — у них своя BMS и другой профиль напряжения.</li>
+                </ul>
+            </div>
+
+            <details class="sources-block">
+                <summary><h2>Нормативная база и источники</h2></summary>
+
+                <h3>Что взято из стандартов, а что — из практики</h3>
+                <ul>
+                    <li><strong>Ток ½ CCA, 15 с, не ниже 9,6 В при +21 °C</strong> и таблица температурной поправки — общепринятая методика BCI, приводится в руководствах по обслуживанию автопроизводителей и производителей АКБ. Строки ниже 0 °C — из сводных таблиц BCI, у разных производителей тестеров могут отличаться на 0,1–0,2 В.</li>
+                    <li><strong>3–3,5 × C20, если CCA неизвестен</strong> — рекомендация производителя АКБ Discover Battery.</li>
+                    <li><strong>Заряд не ниже 75 % перед тестом</strong>, «ниже 9,6 В — зарядить и повторить, снова ниже — замена» — та же методика.</li>
+                    <li><strong>Сам ток CCA</strong> определяют стандарты: SAE J537 (−18 °C, 30 с, не ниже 7,2 В), EN 50342-1, ГОСТ Р 53165-2020 / МЭК 60095-1, DIN 43539 (−18 °C, 30 с до 9 В). Отсюда и разные цифры на этикетках.</li>
+                    <li><strong>Практика, а не норматив:</strong> «отлично — 10,2 В и выше», восстановление до ~12,4 В за 5 с, а также пересчёт порога под недозаряд и под ток вашей вилки (линейная модель внутреннего сопротивления).</li>
+                </ul>
+
+                <h3>ГОСТ Р 53165-2020 «Батареи стартерные свинцово-кислотные. Часть 1. Общие требования и методы испытаний»</h3>
+                <p>Гармонизирован с МЭК 60095-1:2018, определяет методику испытания током холодной прокрутки.</p>
+                <p>
+                    <a href="https://docs.cntd.ru/document/1200177510" target="_blank" rel="noopener">ГОСТ Р 53165-2020 на docs.cntd.ru (Кодекс) →</a><br>
+                    <a href="https://allgosts.ru/29/220/gost_r_53165-2020" target="_blank" rel="noopener">Текст ГОСТ Р 53165-2020 на allgosts.ru →</a>
+                </p>
+
+                <h3>Методика нагрузочного теста</h3>
+                <ul>
+                    <li><a href="https://discoverbattery.com/support/learning-center/battery-101/load-testing-your-battery" target="_blank" rel="noopener">Discover Battery — Load Testing Your Battery (½ CCA или 3–3,5 × C20, 15 с, 9,6 В)</a></li>
+                    <li><a href="https://batteryuniversity.com/article/bu-902a-how-to-measure-cca" target="_blank" rel="noopener">Battery University — BU-902a: How to Measure CCA (условия SAE, IEC, DIN; нагрузочный тест ½ CCA)</a></li>
+                    <li><a href="https://foxed.ca/rx7manual/2003mazdarx8/esicont/en/srvc/html/BHE011718520W02.html" target="_blank" rel="noopener">Руководство по ремонту Mazda RX-8 — Battery Inspection (нагрузка 15 с, таблица +4…+21 °C, к тесту допускается АКБ от 12,4 В)</a></li>
+                </ul>
+
+                <h3>Пересчёт CCA между стандартами</h3>
+                <ul>
+                    <li><a href="https://green-way.com.ua/en/dovidniki/pidruchnyk-po-vlashtuvannju-avtomobilja-single/rozdil43-akumuljatorna-batareja-pryznachennja-budova-i-vydy/punkt-strum-holodnoi-prokrutky" target="_blank" rel="noopener">Green-way — ток холодной прокрутки: таблица соответствия DIN / ГОСТ 959-91, EN / МЭК 60095-1, SAE J537</a></li>
+                </ul>
+
+                <h3>Практические публикации</h3>
+                <ul>
+                    <li><a href="https://www.zr.ru/content/articles/15111-vilkoj_v_rozetku/" target="_blank" rel="noopener">За рулём — «Вилкой в розетку!»: проверка АКБ нагрузочным прибором</a></li>
+                </ul>
+            </details>
+        </main>
+
+        <footer>
+            <p>Калькуляторы для автомобильных аккумуляторов</p>
+        </footer>
+    </div>
+
+    <script src="../js/load-fork.js"></script>
+</body>
+</html>
