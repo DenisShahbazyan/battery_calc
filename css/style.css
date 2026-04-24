@@ -1,0 +1,868 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+}
+
+header h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    font-size: 1.1em;
+    opacity: 0.9;
+}
+
+.back-link {
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.3s;
+}
+
+.back-link:hover {
+    opacity: 0.8;
+}
+
+main {
+    padding: 40px 30px;
+}
+
+/* Главная страница */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.card-icon {
+    font-size: 3em;
+    margin-bottom: 15px;
+}
+
+.card h2 {
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    color: #667eea;
+}
+
+.card p {
+    margin-bottom: 20px;
+    color: #666;
+}
+
+.btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Страницы с калькуляторами */
+.info-block {
+    background: #e8f4f8;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    border-left: 4px solid #667eea;
+}
+
+.requirements, .principle, .steps, .warnings {
+    margin-bottom: 30px;
+}
+
+.requirements h3, .principle h3, .steps h3, .warnings h3, .formula-block h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.requirements ul, .steps ol {
+    margin-left: 25px;
+}
+
+.requirements li, .steps li {
+    margin-bottom: 10px;
+}
+
+.formula {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 15px 0;
+    text-align: center;
+    font-size: 1.1em;
+}
+
+.calculator {
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 8px;
+    margin: 30px 0;
+}
+
+.calculator h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 6px;
+    font-size: 1.1em;
+    font-weight: 600;
+    display: none;
+}
+
+.result.show {
+    display: block;
+}
+
+.result.success {
+    background: #d4edda;
+    color: #155724;
+    border: 2px solid #c3e6cb;
+}
+
+.result.info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 2px solid #bee5eb;
+}
+
+.formula-block {
+    margin: 30px 0;
+}
+
+.note {
+    background: #fff3cd;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 30px;
+    border-left: 4px solid #ffc107;
+}
+
+/* Таблица */
+.table-container {
+    margin: 30px 0;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table thead {
+    background: #667eea;
+    color: white;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+footer {
+    background: #f8f9fa;
+    text-align: center;
+    padding: 20px;
+    color: #666;
+    font-size: 0.9em;
+}
+
+/* Страница SOC калькулятора */
+.method-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.radio-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.radio-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+}
+
+.radio-content {
+    background: #f8f9fa;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.radio-card input[type="radio"]:checked + .radio-content {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.radio-icon {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.radio-title {
+    font-weight: 600;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+}
+
+.radio-desc {
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+.input-section {
+    margin-bottom: 20px;
+}
+
+.input-hint {
+    display: block;
+    margin-top: 5px;
+    color: #666;
+    font-style: italic;
+}
+
+.soc-result-header {
+    margin-bottom: 20px;
+}
+
+.soc-gauge {
+    position: relative;
+    height: 50px;
+    background: #f0f0f0;
+    border-radius: 25px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.soc-gauge-fill {
+    height: 100%;
+    transition: width 0.6s ease;
+    border-radius: 25px;
+}
+
+.soc-gauge-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5em;
+    font-weight: 700;
+    color: #333;
+    text-shadow: 0 0 3px white, 0 0 3px white;
+}
+
+.soc-status {
+    text-align: center;
+    font-size: 1.4em;
+    font-weight: 700;
+}
+
+.result-details {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #e0e0e0;
+}
+
+.result-detail {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.result-detail:last-child {
+    border-bottom: none;
+}
+
+.result-detail.correction {
+    background: #fff3cd;
+    padding: 8px 10px;
+    margin: 5px -10px;
+    border-radius: 4px;
+    border: none;
+}
+
+.result-detail.highlight {
+    background: #f8f9fa;
+    padding: 8px 10px;
+    margin: 10px -10px 0;
+    border-radius: 4px;
+    font-weight: 600;
+    border: none;
+}
+
+.detail-label {
+    color: #666;
+}
+
+.detail-value {
+    font-weight: 600;
+    color: #333;
+}
+
+.soc-info {
+    margin: 30px 0;
+}
+
+.soc-info h3 {
+    color: #667eea;
+    margin-bottom: 20px;
+}
+
+.soc-levels {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.soc-level {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    background: #f8f9fa;
+    border-radius: 6px;
+    border-left: 4px solid;
+}
+
+.level-100 { border-left-color: #4CAF50; }
+.level-75 { border-left-color: #8BC34A; }
+.level-50 { border-left-color: #FFC107; }
+.level-25 { border-left-color: #FF9800; }
+.level-0 { border-left-color: #F44336; }
+
+.level-indicator {
+    min-width: 60px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.2em;
+    color: #667eea;
+}
+
+.level-desc {
+    flex: 1;
+}
+
+.level-desc strong {
+    display: block;
+    margin-bottom: 3px;
+}
+
+/* Страница Кулон-820 */
+.results-container {
+    display: none;
+}
+
+.results-container.show {
+    display: block;
+}
+
+.stage-card {
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.stage-card.disabled .stage-header {
+    filter: grayscale(0.7) brightness(0.95);
+}
+
+.stage-header {
+    padding: 20px 25px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.stage-header h3 {
+    margin: 0;
+    font-size: 1.3em;
+    flex: 1;
+}
+
+.stage-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: 500;
+}
+
+/* Тогл-переключатель */
+.stage-toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.stage-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.stage-toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+    transition: 0.25s;
+    border-radius: 28px;
+}
+
+.stage-toggle-slider::before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.25s;
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.stage-toggle input:checked + .stage-toggle-slider {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.stage-toggle input:checked + .stage-toggle-slider::before {
+    transform: translateX(22px);
+}
+
+.stage-0 {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.stage-1 {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.stage-2 {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.stage-3 {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.stage-4 {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+.stage-body {
+    padding: 25px;
+}
+
+.stage-body.collapsed {
+    display: none;
+}
+
+/* Подэтап внутри карточки (напр. Асимметричный заряд внутри Основного) */
+.sub-stage {
+    margin: 15px 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #fafbfc;
+}
+
+.sub-stage.disabled {
+    opacity: 0.75;
+}
+
+.sub-stage-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    background: #f0f2f5;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.sub-stage.disabled .sub-stage-header {
+    border-bottom: none;
+}
+
+.sub-stage-header .stage-toggle-slider {
+    background-color: #c0c4cc;
+}
+
+.sub-stage-header .stage-toggle input:checked + .stage-toggle-slider {
+    background-color: #667eea;
+}
+
+.sub-stage-title {
+    font-weight: 600;
+    color: #333;
+    font-size: 1.05em;
+}
+
+.sub-stage-note {
+    color: #666;
+    font-size: 0.88em;
+    margin-left: auto;
+    text-align: right;
+}
+
+.sub-stage-body {
+    padding: 15px 20px;
+}
+
+.sub-stage-body.collapsed {
+    display: none;
+}
+
+.param-row {
+    display: grid;
+    grid-template-columns: 180px 120px 1fr;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+    align-items: center;
+}
+
+.param-row:last-of-type {
+    border-bottom: none;
+}
+
+.param-row.highlight {
+    background: #fffacd;
+    padding: 12px 15px;
+    margin: 10px -15px;
+    border-radius: 6px;
+    border: 2px solid #ffd700;
+}
+
+.param-name {
+    font-weight: 600;
+    color: #333;
+}
+
+.param-value {
+    font-size: 1.2em;
+    font-weight: 700;
+    color: #667eea;
+}
+
+.param-note {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.param-row-alt {
+    padding: 8px 15px;
+    background: #f8f9fa;
+    margin: 10px -15px;
+    border-left: 3px solid #667eea;
+}
+
+.param-row-alt .param-note {
+    font-style: italic;
+}
+
+.info-note {
+    background: #e8f4f8;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+    border-left: 4px solid #4facfe;
+    line-height: 1.6;
+}
+
+.info-note strong {
+    color: #667eea;
+}
+
+.warning-note {
+    background: #fff3cd;
+    padding: 15px;
+    border-radius: 6px;
+    margin-top: 15px;
+    border-left: 4px solid #ffc107;
+    line-height: 1.6;
+}
+
+.warning-note strong {
+    color: #ff6b6b;
+}
+
+.reference-card {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.reference-card h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+}
+
+.reference-card table {
+    background: white;
+}
+
+/* Блок с нормативными источниками */
+.sources-block {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    margin-top: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-left: 5px solid #667eea;
+}
+
+.sources-block > summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    user-select: none;
+}
+
+.sources-block > summary::-webkit-details-marker {
+    display: none;
+}
+
+.sources-block > summary::before {
+    content: "▶";
+    color: #667eea;
+    font-size: 0.9em;
+    transition: transform 0.2s ease;
+    display: inline-block;
+}
+
+.sources-block[open] > summary::before {
+    transform: rotate(90deg);
+}
+
+.sources-block h2 {
+    color: #333;
+    margin: 0;
+    font-size: 1.4em;
+    display: inline;
+}
+
+.sources-block[open] > summary {
+    margin-bottom: 15px;
+}
+
+.sources-block h3 {
+    color: #667eea;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.sources-block p {
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.sources-block ul {
+    margin-left: 20px;
+    line-height: 1.8;
+    color: #444;
+}
+
+.sources-block a {
+    color: #667eea;
+    text-decoration: none;
+    border-bottom: 1px dashed #667eea;
+}
+
+.sources-block a:hover {
+    color: #5568d3;
+    border-bottom-style: solid;
+}
+
+.sources-block code {
+    background: #f0f2f5;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: "Courier New", monospace;
+    font-size: 0.9em;
+    color: #c03;
+}
+
+.sources-note {
+    background: #fff7e6;
+    border-left: 4px solid #f5a623;
+    padding: 15px 20px;
+    margin-top: 20px;
+    border-radius: 4px;
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: #5a4a1f;
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    header {
+        padding: 30px 20px;
+    }
+    
+    header h1 {
+        font-size: 1.5em;
+    }
+    
+    main {
+        padding: 30px 20px;
+    }
+    
+    .cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .calculator {
+        padding: 20px;
+    }
+    
+    table {
+        font-size: 0.9em;
+    }
+    
+    table th, table td {
+        padding: 8px;
+    }
+    
+    .stage-header {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    
+    .stage-badge {
+        align-self: flex-start;
+    }
+    
+    .param-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .param-value {
+        font-size: 1.4em;
+    }
+    
+    .stage-body {
+        padding: 20px 15px;
+    }
+}

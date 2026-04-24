@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Расчёт веса АКБ по ёмкости</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="../index.html" class="back-link">← Назад на главную</a>
+            <h1>Расчёт идеального веса АКБ по ёмкости</h1>
+        </header>
+
+        <main>
+            <div class="info-block">
+                <p>Идеальный вес свинцово-кислотного аккумулятора напрямую зависит от его ёмкости. Базовое соотношение: на каждые <strong>10 Ач</strong> приходится <strong>2,8 кг</strong> массы.</p>
+            </div>
+
+            <div class="calculator">
+                <h2>Калькулятор</h2>
+                <div class="input-group">
+                    <label for="capacity">Ёмкость АКБ (Ач):</label>
+                    <input type="number" id="capacity" placeholder="Например: 60" min="1" step="1">
+                </div>
+                <button onclick="calculateWeight()" class="btn">Рассчитать</button>
+                <div id="result" class="result"></div>
+            </div>
+
+            <div class="formula-block">
+                <h3>Формула расчёта</h3>
+                <div class="formula">
+                    <strong>Вес АКБ (кг) = 0,28 × Ёмкость АКБ (Ач)</strong>
+                </div>
+                <p>где <strong>0,28</strong> — коэффициент удельного веса (кг/Ач).</p>
+            </div>
+
+            <div class="note">
+                <p><em>Примечание: указанные значения являются идеальными расчётными. Фактический вес АКБ может отличаться в зависимости от производителя, типа электролита и конструкции корпуса.</em></p>
+            </div>
+        </main>
+
+        <footer>
+            <p>Калькуляторы для автомобильных аккумуляторов</p>
+        </footer>
+    </div>
+
+    <script src="../js/battery-weight.js"></script>
+</body>
+</html>

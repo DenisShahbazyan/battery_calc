@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройка Кулон-820</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="../index.html" class="back-link">← Назад на главную</a>
+            <h1>Настройка зарядного устройства Кулон-820</h1>
+        </header>
+
+        <main>
+            <div class="info-block">
+                <p>Автоматический расчёт всех параметров для зарядки аккумулятора. Введите только напряжение и ёмкость АКБ — остальные настройки будут рассчитаны по оптимальным соотношениям для Ca/Ca батарей.</p>
+            </div>
+
+            <div class="calculator">
+                <h2>Параметры АКБ</h2>
+                <div class="input-group">
+                    <label for="voltage">Номинальное напряжение АКБ (В):</label>
+                    <input type="number" id="voltage" placeholder="Например: 12" min="6" max="24" step="1" value="12">
+                </div>
+                <div class="input-group">
+                    <label for="capacity">Ёмкость АКБ (Ач):</label>
+                    <input type="number" id="capacity" placeholder="Например: 60" min="1" step="1" value="60">
+                </div>
+                <button onclick="calculateSettings()" class="btn">Рассчитать настройки</button>
+            </div>
+
+            <div id="results" class="results-container"></div>
+
+            <details class="sources-block">
+                <summary><h2>Нормативная база и источники</h2></summary>
+                <p>
+                    Режим заряда кальциевых (Ca/Ca) аккумуляторов повышенным напряжением
+                    <strong>до 16 В</strong> — не «народное изобретение», а режим, прямо
+                    закреплённый в государственных стандартах РФ и международных стандартах МЭК.
+                </p>
+
+                <h3>ГОСТ Р 53165-2020 «Батареи стартерные свинцово-кислотные. Часть 1. Общие требования и методы испытаний»</h3>
+                <p>
+                    Действующий стандарт (заменил ГОСТ Р 53165-2008), гармонизирован с МЭК 60095-1:2018.
+                    <strong>Пункт 8.2 и Таблица 1 «Способ заряда»</strong> устанавливают методику заряда
+                    перед испытаниями:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Батареи открытого типа</strong> (ГОСТ Р МЭК 60095-2):
+                        постоянное напряжение <strong>16,00 ± 0,05 В</strong>,
+                        ток <code>I₂₀ = C₂₀ / 20</code>, длительность <strong>24 или 16 часов</strong>.
+                    </li>
+                    <li>
+                        <strong>Батареи открытого типа</strong> (ГОСТ Р МЭК 60095-4): двухэтапный заряд —
+                        сначала при <strong>16,00 ± 0,05 В</strong>, затем постоянным током 4 часа.
+                    </li>
+                    <li>
+                        <strong>Батареи VRLA</strong> (с регулирующим клапаном, AGM/GEL):
+                        <strong>14,80 ± 0,05 В</strong>, 24 или 16 часов (для них 16 В не применяется
+                        из-за конструктивных особенностей).
+                    </li>
+                </ul>
+                <p>
+                    Открытые батареи с кальциевыми сплавами (тип <strong>VL</strong>, very low water loss)
+                    заряжаются по общей для открытых батарей методике — то есть именно при 16 В.
+                    Классификация VL описана в разделе 4.1, расход воды нормирован в разделе 7.1.6
+                    и Таблице 6 (не более 1 г/А·ч).
+                </p>
+                <p>
+                    <a href="https://allgosts.ru/29/220/gost_r_53165-2020" target="_blank" rel="noopener">
+                        Текст ГОСТ Р 53165-2020 на allgosts.ru →
+                    </a><br>
+                    <a href="https://docs.cntd.ru/document/1200177510" target="_blank" rel="noopener">
+                        ГОСТ Р 53165-2020 на docs.cntd.ru (Кодекс) →
+                    </a><br>
+                    <a href="https://internet-law.ru/gosts/gost/74404/" target="_blank" rel="noopener">
+                        ГОСТ Р 53165-2020 на internet-law.ru →
+                    </a>
+                </p>
+
+                <h3>ГОСТ Р 53165-2008 (предшествующая редакция)</h3>
+                <p>
+                    Аналогичный режим заряда при 16 В для открытых батарей (в том числе
+                    с кальциевыми сплавами) присутствовал и в предыдущей редакции стандарта —
+                    <strong>раздел 8.2.2</strong>.
+                </p>
+                <p>
+                    <a href="https://docs.cntd.ru/document/1200071297" target="_blank" rel="noopener">
+                        ГОСТ Р 53165-2008 на docs.cntd.ru →
+                    </a><br>
+                    <a href="https://files.stroyinf.ru/Data/481/48163.pdf" target="_blank" rel="noopener">
+                        ГОСТ Р 53165-2008 (PDF на stroyinf.ru) →
+                    </a>
+                </p>
+
+                <h3>МЭК 60095-1 (IEC 60095-1)</h3>
+                <p>
+                    Международный стандарт, с которым гармонизированы российские ГОСТы.
+                    Режим 16 В для открытых кальциевых батарей закреплён именно там.
+                </p>
+
+                <h3>Практические публикации и обзоры</h3>
+                <ul>
+                    <li>
+                        <a href="https://batteryservice.ru/support/zaryadka-kaltsievogo-akkumulyatora/" target="_blank" rel="noopener">
+                            Battery Service — зарядка кальциевого аккумулятора
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://akbinfo.ru/zaryadka/zarjadka-kalcievogo-akkumuljatora-avtomobilja.html" target="_blank" rel="noopener">
+                            Akbinfo.ru — зарядка кальциевого аккумулятора автомобиля
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://orionspb.ru/articles/621/6923/" target="_blank" rel="noopener">
+                            Орион-СПб — особенности заряда кальциевых аккумуляторов
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://1ak.by/blog/kak-zaryazhat-kaltsievyy-caca-akkumulyator" target="_blank" rel="noopener">
+                            Первая Аккумуляторная Компания — как заряжать Ca/Ca АКБ
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://habr.com/ru/companies/ruvds/articles/558804/" target="_blank" rel="noopener">
+                            Хабр — что убивает кальциевые аккумуляторы
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.zr.ru/content/articles/919816-kak-pravilno-zaryazhat-kaltsie/" target="_blank" rel="noopener">
+                            «За рулём» — как правильно заряжать кальциевые аккумуляторы
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="sources-note">
+                    <strong>Важно:</strong> ГОСТ описывает режим заряда в рамках <em>методики испытаний</em>,
+                    а не повседневной эксплуатации в автомобиле (где штатным генератором подаётся 14,2–14,7 В).
+                    Но сам факт того, что стандарт нормирует 16 В именно для открытых батарей с Ca-сплавами,
+                    является прямым подтверждением: такой режим заряда технически обоснован и допустим.
+                    При заряде только до штатного напряжения бортовой сети кальциевые АКБ хронически
+                    недозаряжаются. Точная величина недозаряда зависит от глубины разряда, температуры
+                    и состояния батареи, но в практической литературе оценивается в диапазоне
+                    <strong>от ~10 % до ~20 %</strong> от номинальной ёмкости. Этот недозаряд накапливается
+                    циклически и приводит к прогрессирующей сульфатации пластин и расслоению электролита —
+                    именно поэтому этап дозаряда повышенным напряжением для Ca/Ca АКБ критичен.
+                </div>
+            </details>
+        </main>
+
+        <footer>
+            <p>Калькуляторы для автомобильных аккумуляторов</p>
+        </footer>
+    </div>
+
+    <script src="../js/kulon-820.js"></script>
+</body>
+</html>
